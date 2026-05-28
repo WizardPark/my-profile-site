@@ -373,14 +373,20 @@
     </svg>
 
     <div class="max-w-7xl mx-auto w-full relative z-10">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <!-- 좌측: Hero 컨텐츠 -->
-        <div class="text-left md:text-left">
-          <!-- 이름 -->
-          <h1 class="hero-title text-4xl md:text-5xl font-bold mb-2 text-white">
-            <span id="name-text"></span>
-          </h1>
+      <!-- 헤더 행: 제목 정렬 -->
+      <div class="grid md:grid-cols-2 gap-8 mb-8 items-start">
+        <!-- 좌측: 이름 -->
+        <h1 class="hero-title text-4xl md:text-5xl font-bold text-white">
+          <span id="name-text"></span>
+        </h1>
+        <!-- 우측: About Me 제목 -->
+        <h3 class="text-4xl md:text-5xl font-bold text-white">About Me</h3>
+      </div>
 
+      <!-- 컨텐츠 행 -->
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        <!-- 좌측: Hero 컨텐츠 -->
+        <div class="text-left">
           <!-- 직업/역할 타이핑 애니메이션 -->
           <div class="text-xl md:text-2xl font-light mb-6 text-sky-400 h-8 md:h-10">
             <span id="role-text"></span>
@@ -388,7 +394,7 @@
           </div>
 
           <!-- 소개 문구 -->
-          <p id="intro-text" class="text-slate-300 text-sm md:text-base mb-8 leading-relaxed"></p>
+          <p id="intro-text" class="text-slate-300 text-base md:text-lg mb-8 leading-relaxed"></p>
 
           <!-- CTA 버튼 -->
           <div class="flex flex-col sm:flex-row gap-3">
@@ -403,16 +409,15 @@
 
         <!-- 우측: About + Tech Stack -->
         <div class="space-y-8">
-          <!-- About 섹션 -->
+          <!-- About 설명 -->
           <div>
-            <h3 class="text-xl font-bold text-white mb-3">About Me</h3>
-            <p id="about-intro" class="text-slate-300 text-sm leading-relaxed"></p>
+            <p id="about-intro" class="text-slate-300 text-base md:text-lg leading-relaxed"></p>
           </div>
 
           <!-- Tech Stack 섹션 -->
           <div>
-            <h3 class="text-xl font-bold text-white mb-3">Tech Stack</h3>
-            <div id="hero-tech-stack" class="grid grid-cols-2 gap-2">
+            <h4 class="text-4xl md:text-5xl font-bold text-white mb-4">Tech Stack</h4>
+            <div id="hero-tech-stack" class="grid grid-cols-2 gap-3">
               <!-- 동적으로 생성됨 -->
             </div>
           </div>

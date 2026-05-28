@@ -66,8 +66,9 @@ function renderIntro() {
 
 // ========== 4. About 섹션 소개 ==========
 function renderAboutIntro() {
-  const introLines = PROFILE.intro.map(line => line.trim()).join('\n');
-  aboutIntro.innerHTML = introLines.replace(/\n/g, '<br>');
+  if (aboutIntro) {
+    aboutIntro.textContent = PROFILE.aboutDetail || '';
+  }
 }
 
 // ========== 4-1. 근무일수 계산 함수 ==========
@@ -212,10 +213,10 @@ function renderTechStack() {
     // 각 스킬 배지 생성
     PROFILE.skills.forEach(skill => {
       const badge = document.createElement('div');
-      badge.className = 'skill-badge px-3 py-2 rounded-lg text-center';
+      badge.className = 'skill-badge px-4 py-3 rounded-lg text-center';
 
       const skillName = document.createElement('div');
-      skillName.className = 'font-semibold text-white text-xs';
+      skillName.className = 'font-semibold text-white text-sm';
       skillName.textContent = skill.name;
 
       const skillLevel = document.createElement('div');
