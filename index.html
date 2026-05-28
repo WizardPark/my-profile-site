@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WizardPark - Firmware Developer Portfolio</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 커스텀 스타일 */
+    * {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Hero 섹션 배경 */
+    .hero-bg {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 배경 패턴 SVG */
+    .circuit-pattern {
+      position: absolute;
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    /* 타이핑 애니메이션 커서 */
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background-color: #38BDF8;
+      animation: blink 1s step-end infinite;
+      margin-left: 0.1em;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    /* Fade-in 애니메이션 */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.8s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 스킬 배지 */
+    .skill-badge {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid #38BDF8;
+      transition: all 0.3s ease;
+    }
+
+    .skill-badge:hover {
+      background: rgba(56, 189, 248, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* 프로젝트 카드 */
+    .project-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .project-card:hover {
+      border-color: #38BDF8;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.1);
+    }
+
+    /* 섹션 제목 */
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* 버튼 스타일 */
+    .btn-primary {
+      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    /* Contact 섹션 */
+    .contact-info {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid #38BDF8;
+      backdrop-filter: blur(10px);
+    }
+
+    /* 타임라인 카드 스타일 */
+    .timeline-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .timeline-card:hover {
+      border-color: #38BDF8;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.1);
+    }
+
+    /* 타임라인 점 */
+    .timeline-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #38BDF8;
+      border: 4px solid #0F172A;
+      border-radius: 50%;
+      top: 8px;
+      z-index: 10;
+    }
+
+    /* 좌측 카드 (짝수) */
+    .timeline-card.left {
+      margin-left: 0;
+      margin-right: auto;
+      width: 100%;
+    }
+
+    .timeline-card.left .timeline-dot {
+      right: -40px;
+    }
+
+    /* 우측 카드 (홀수) */
+    .timeline-card.right {
+      margin-left: auto;
+      margin-right: 0;
+      width: 100%;
+    }
+
+    .timeline-card.right .timeline-dot {
+      left: -40px;
+    }
+
+    /* 모바일 시 타임라인 정렬 */
+    @media (max-width: 768px) {
+      .timeline-card {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      .timeline-card .timeline-dot {
+        left: 8px !important;
+        right: auto !important;
+      }
+
+      .absolute.left-1\/2 {
+        left: 24px !important;
+      }
+    }
+
+    /* 퇴사 사유 배지 스타일 */
+    .exit-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .exit-badge.graduated {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.5);
+    }
+
+    .exit-badge.employed {
+      background: rgba(56, 189, 248, 0.2);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .exit-badge.voluntary {
+      background: rgba(250, 204, 21, 0.2);
+      color: #fef08a;
+      border: 1px solid rgba(250, 204, 21, 0.5);
+    }
+
+    .exit-badge.recommended {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.5);
+    }
+
+    .exit-badge.contract {
+      background: rgba(107, 114, 128, 0.2);
+      color: #d1d5db;
+      border: 1px solid rgba(107, 114, 128, 0.5);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* 업적 카드 */
+    .achievement-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+    }
+
+    .achievement-card:hover {
+      border-color: #38BDF8;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.1);
+    }
+
+    /* 업적 타입 배지 */
+    .achievement-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    .achievement-badge.paper {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+    }
+
+    .achievement-badge.patent {
+      background: rgba(147, 51, 234, 0.2);
+      color: #d8b4fe;
+      border: 1px solid rgba(147, 51, 234, 0.5);
+    }
+
+    .achievement-badge.award {
+      background: rgba(217, 119, 6, 0.2);
+      color: #fcd34d;
+      border: 1px solid rgba(217, 119, 6, 0.5);
+    }
+
+    /* 반응형 조정 */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 1.875rem;
+      }
+
+      .hero-title {
+        font-size: 1.875rem !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100">
+
+  <!-- ============= HERO SECTION ============= -->
+  <section id="hero" class="hero-bg min-h-screen flex items-center justify-center px-4 py-20 relative">
+    <!-- 배경 SVG 패턴 -->
+    <svg class="circuit-pattern" width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="circuit" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.5" fill="#38BDF8"/>
+          <circle cx="18" cy="18" r="0.5" fill="#38BDF8"/>
+          <line x1="2" y1="2" x2="18" y2="18" stroke="#38BDF8" stroke-width="0.1"/>
+          <rect x="8" y="8" width="4" height="4" fill="none" stroke="#38BDF8" stroke-width="0.1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#circuit)"/>
+    </svg>
+
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <!-- 이름 -->
+      <h1 class="hero-title text-4xl md:text-6xl font-bold mb-4 text-white">
+        <span id="name-text"></span>
+      </h1>
+
+      <!-- 직업/역할 타이핑 애니메이션 -->
+      <div class="text-2xl md:text-4xl font-light mb-8 text-sky-400 h-12 md:h-16">
+        <span id="role-text"></span>
+        <span class="typing-cursor"></span>
+      </div>
+
+      <!-- 소개 문구 -->
+      <p id="intro-text" class="text-slate-300 text-lg md:text-xl mb-12 leading-relaxed max-w-2xl mx-auto"></p>
+
+      <!-- CTA 버튼 -->
+      <div class="flex flex-col md:flex-row gap-4 justify-center">
+        <a href="#projects" class="btn-primary px-8 py-3 rounded-lg text-white font-semibold">
+          프로젝트 보기
+        </a>
+        <a href="#contact" class="px-8 py-3 rounded-lg border border-sky-400 text-sky-400 font-semibold hover:bg-sky-400 hover:text-slate-900 transition-all">
+          연락하기
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ABOUT SECTION ============= -->
+  <section id="about" class="py-20 px-4 bg-slate-900">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="section-title mb-12 text-center">About Me</h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- 소개 텍스트 -->
+        <div class="fade-in" style="animation-delay: 0.1s;">
+          <h3 class="text-2xl font-bold text-white mb-4">펌웨어 개발자</h3>
+          <p id="about-intro" class="text-slate-300 leading-relaxed"></p>
+        </div>
+
+        <!-- 경력 하이라이트 -->
+        <div class="fade-in" style="animation-delay: 0.2s;">
+          <h3 class="text-2xl font-bold text-white mb-4">주요 경험</h3>
+          <ul class="text-slate-300 space-y-2">
+            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> STM32, AVR 마이크로컨트롤러 개발</li>
+            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> PyQt GUI 프로그래밍</li>
+            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> 회로설계 및 PCB 제작</li>
+            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> 임베디드 C/Python 개발</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= CAREER TIMELINE SECTION ============= -->
+  <section id="career" class="py-20 px-4 bg-slate-800">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="section-title mb-16 text-center">Career Timeline</h2>
+
+      <div id="career-timeline" class="relative">
+        <!-- 타임라인 중앙 수직선 (데스크톱) -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-sky-400 to-sky-600 hidden md:block"></div>
+
+        <!-- 타임라인 항목들 (동적으로 생성됨) -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= TECH STACK SECTION ============= -->
+  <section id="tech-stack" class="py-20 px-4 bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="section-title mb-12 text-center">Tech Stack</h2>
+
+      <div id="tech-stack-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- 동적으로 생성됨 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= ACHIEVEMENTS SECTION ============= -->
+  <section id="achievements" class="py-20 px-4 bg-slate-800">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="section-title mb-12 text-center">Achievements</h2>
+
+      <div id="achievements-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 동적으로 생성됨 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= PROJECTS SECTION ============= -->
+  <section id="projects" class="py-20 px-4 bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="section-title mb-12 text-center">Projects & Portfolio</h2>
+
+      <div id="projects-grid" class="grid md:grid-cols-2 gap-8">
+        <!-- 동적으로 생성됨 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= CONTACT SECTION ============= -->
+  <section id="contact" class="py-20 px-4 bg-slate-800">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="section-title mb-12">Get In Touch</h2>
+
+      <div class="contact-info p-8 rounded-lg mb-8">
+        <p class="text-slate-300 mb-6">아래의 연락처로 저에게 직접 연락할 수 있습니다.</p>
+
+        <div class="space-y-6">
+          <!-- 이메일 -->
+          <div>
+            <p class="text-slate-400 mb-2">📧 Email</p>
+            <a id="email-link" href="" class="text-sky-400 text-xl font-semibold hover:text-sky-300 transition-colors"></a>
+          </div>
+
+          <!-- 전화번호 -->
+          <div>
+            <p class="text-slate-400 mb-2">📱 Phone</p>
+            <p id="phone-text" class="text-white text-xl font-semibold"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 이메일 폼 -->
+      <form action="" method="GET" class="space-y-4">
+        <button type="submit" id="email-button" class="btn-primary w-full py-3 rounded-lg text-white font-semibold">
+          이메일로 연락하기
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="bg-slate-900 text-center py-8 text-slate-500 border-t border-slate-700">
+    <p>&copy; 2024 <span id="footer-name"></span>. All rights reserved.</p>
+  </footer>
+
+  <!-- ============= SCRIPTS ============= -->
+  <!-- config.js를 먼저 로드 (PROFILE 객체 정의) -->
+  <script src="config.js"></script>
+
+  <!-- main.js (렌더링 로직) -->
+  <script src="main.js"></script>
+
+</body>
+</html>
