@@ -198,37 +198,35 @@ function renderCareer() {
   });
 }
 
-// ========== 6. Tech Stack 렌더링 ==========
+// ========== 6. Tech Stack 렌더링 (Hero 섹션용) ==========
 function renderTechStack() {
-  techStackContainer.innerHTML = '';
+  const heroTechStack = document.getElementById('hero-tech-stack');
+  const oldTechStackContainer = document.getElementById('tech-stack-container');
 
-  // 카테고리별 그룹화
-  const categorized = {};
-  PROFILE.skills.forEach(skill => {
-    if (!categorized[skill.category]) {
-      categorized[skill.category] = [];
-    }
-    categorized[skill.category].push(skill);
-  });
+  // 기존 tech-stack-container가 있으면 사용, 없으면 hero-tech-stack 사용
+  const container = oldTechStackContainer || heroTechStack;
 
-  // 각 스킬 배지 생성
-  PROFILE.skills.forEach(skill => {
-    const badge = document.createElement('div');
-    badge.className = 'skill-badge px-4 py-2 rounded-lg text-center fade-in';
-    badge.style.animationDelay = `${PROFILE.skills.indexOf(skill) * 0.05}s`;
+  if (container) {
+    container.innerHTML = '';
 
-    const skillName = document.createElement('div');
-    skillName.className = 'font-semibold text-white text-sm md:text-base';
-    skillName.textContent = skill.name;
+    // 각 스킬 배지 생성
+    PROFILE.skills.forEach(skill => {
+      const badge = document.createElement('div');
+      badge.className = 'skill-badge px-3 py-2 rounded-lg text-center';
 
-    const skillLevel = document.createElement('div');
-    skillLevel.className = 'text-xs text-sky-400 mt-1';
-    skillLevel.textContent = skill.level;
+      const skillName = document.createElement('div');
+      skillName.className = 'font-semibold text-white text-xs';
+      skillName.textContent = skill.name;
 
-    badge.appendChild(skillName);
-    badge.appendChild(skillLevel);
-    techStackContainer.appendChild(badge);
-  });
+      const skillLevel = document.createElement('div');
+      skillLevel.className = 'text-xs text-sky-400 mt-1';
+      skillLevel.textContent = skill.level;
+
+      badge.appendChild(skillName);
+      badge.appendChild(skillLevel);
+      container.appendChild(badge);
+    });
+  }
 }
 
 // ========== 6-1. 업적 아이콘 및 배지 클래스 반환 ==========

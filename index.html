@@ -26,6 +26,8 @@
       background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
       position: relative;
       overflow: hidden;
+      min-height: auto;
+      padding: 60px 20px;
     }
 
     /* 배경 패턴 SVG */
@@ -355,7 +357,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100">
 
-  <!-- ============= HERO SECTION ============= -->
+  <!-- ============= HERO + ABOUT SECTION (압축형) ============= -->
   <section id="hero" class="hero-bg min-h-screen flex items-center justify-center px-4 py-20 relative">
     <!-- 배경 SVG 패턴 -->
     <svg class="circuit-pattern" width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -370,54 +372,50 @@
       <rect width="100%" height="100%" fill="url(#circuit)"/>
     </svg>
 
-    <div class="max-w-4xl mx-auto text-center relative z-10">
-      <!-- 이름 -->
-      <h1 class="hero-title text-4xl md:text-6xl font-bold mb-4 text-white">
-        <span id="name-text"></span>
-      </h1>
+    <div class="max-w-7xl mx-auto w-full relative z-10">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- 좌측: Hero 컨텐츠 -->
+        <div class="text-left md:text-left">
+          <!-- 이름 -->
+          <h1 class="hero-title text-4xl md:text-5xl font-bold mb-2 text-white">
+            <span id="name-text"></span>
+          </h1>
 
-      <!-- 직업/역할 타이핑 애니메이션 -->
-      <div class="text-2xl md:text-4xl font-light mb-8 text-sky-400 h-12 md:h-16">
-        <span id="role-text"></span>
-        <span class="typing-cursor"></span>
-      </div>
+          <!-- 직업/역할 타이핑 애니메이션 -->
+          <div class="text-xl md:text-2xl font-light mb-6 text-sky-400 h-8 md:h-10">
+            <span id="role-text"></span>
+            <span class="typing-cursor"></span>
+          </div>
 
-      <!-- 소개 문구 -->
-      <p id="intro-text" class="text-slate-300 text-lg md:text-xl mb-12 leading-relaxed max-w-2xl mx-auto"></p>
+          <!-- 소개 문구 -->
+          <p id="intro-text" class="text-slate-300 text-sm md:text-base mb-8 leading-relaxed"></p>
 
-      <!-- CTA 버튼 -->
-      <div class="flex flex-col md:flex-row gap-4 justify-center">
-        <a href="#projects" class="btn-primary px-8 py-3 rounded-lg text-white font-semibold">
-          프로젝트 보기
-        </a>
-        <a href="#contact" class="px-8 py-3 rounded-lg border border-sky-400 text-sky-400 font-semibold hover:bg-sky-400 hover:text-slate-900 transition-all">
-          연락하기
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============= ABOUT SECTION ============= -->
-  <section id="about" class="py-20 px-4 bg-slate-900">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="section-title mb-12 text-center">About Me</h2>
-
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- 소개 텍스트 -->
-        <div class="fade-in" style="animation-delay: 0.1s;">
-          <h3 class="text-2xl font-bold text-white mb-4">펌웨어 개발자</h3>
-          <p id="about-intro" class="text-slate-300 leading-relaxed"></p>
+          <!-- CTA 버튼 -->
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="#projects" class="btn-primary px-6 py-2 rounded-lg text-white font-semibold text-sm">
+              프로젝트 보기
+            </a>
+            <a href="#contact" class="px-6 py-2 rounded-lg border border-sky-400 text-sky-400 font-semibold hover:bg-sky-400 hover:text-slate-900 transition-all text-sm">
+              연락하기
+            </a>
+          </div>
         </div>
 
-        <!-- 경력 하이라이트 -->
-        <div class="fade-in" style="animation-delay: 0.2s;">
-          <h3 class="text-2xl font-bold text-white mb-4">주요 경험</h3>
-          <ul class="text-slate-300 space-y-2">
-            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> STM32, AVR 마이크로컨트롤러 개발</li>
-            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> PyQt GUI 프로그래밍</li>
-            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> 회로설계 및 PCB 제작</li>
-            <li class="flex items-center"><span class="text-sky-400 mr-3">✓</span> 임베디드 C/Python 개발</li>
-          </ul>
+        <!-- 우측: About + Tech Stack -->
+        <div class="space-y-8">
+          <!-- About 섹션 -->
+          <div>
+            <h3 class="text-xl font-bold text-white mb-3">About Me</h3>
+            <p id="about-intro" class="text-slate-300 text-sm leading-relaxed"></p>
+          </div>
+
+          <!-- Tech Stack 섹션 -->
+          <div>
+            <h3 class="text-xl font-bold text-white mb-3">Tech Stack</h3>
+            <div id="hero-tech-stack" class="grid grid-cols-2 gap-2">
+              <!-- 동적으로 생성됨 -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -443,17 +441,6 @@
       <p class="text-center text-slate-400 text-sm mt-12 lg:hidden">
         💡 좌우로 스크롤하여 전체 경력을 확인하세요
       </p>
-    </div>
-  </section>
-
-  <!-- ============= TECH STACK SECTION ============= -->
-  <section id="tech-stack" class="py-20 px-4 bg-slate-900">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="section-title mb-12 text-center">Tech Stack</h2>
-
-      <div id="tech-stack-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <!-- 동적으로 생성됨 -->
-      </div>
     </div>
   </section>
 
