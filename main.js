@@ -26,6 +26,7 @@ function initialize() {
   renderCareer();
   renderTechStack();
   renderAchievements();
+  renderProjectFilters();
   renderProjects();
   renderContact();
   renderFooter();
@@ -116,37 +117,30 @@ function getExitReasonClass(exitReason) {
   return reasonMap[exitReason] || 'graduated';
 }
 
-// ========== 5. Career 타임라인 렌더링 ==========
+// ========== 5. Career 타임라인 렌더링 (수평 버전) ==========
 function renderCareer() {
   careerTimeline.innerHTML = '';
 
   PROFILE.career.forEach((item, index) => {
-    // 카드 컨테이너
-    const cardContainer = document.createElement('div');
-    cardContainer.className = 'mb-8 md:mb-0 md:flex items-start';
-    if (index % 2 === 0) {
-      cardContainer.className += ' md:flex-row-reverse';
-    }
-
     // 카드 본체
     const card = document.createElement('div');
-    card.className = `timeline-card p-6 rounded-lg fade-in ${index % 2 === 0 ? 'right' : 'left'} md:w-5/12`;
+    card.className = 'timeline-card fade-in';
     card.style.animationDelay = `${index * 0.1}s`;
 
-    // 타임라인 점
+    // 타임라인 점 (수평)
     const dot = document.createElement('div');
-    dot.className = 'timeline-dot hidden md:block';
+    dot.className = 'timeline-dot';
 
-    // 기관명 + 타입 아이콘
+    // 기관명 + 타입 아이콘 (상단)
     const headerDiv = document.createElement('div');
-    headerDiv.className = 'flex items-center gap-2 mb-2';
+    headerDiv.className = 'flex items-center gap-2 mb-3';
 
     const typeIcon = document.createElement('span');
-    typeIcon.className = 'text-xl';
+    typeIcon.className = 'text-2xl';
     typeIcon.textContent = item.type === 'education' ? '🎓' : '🏢';
 
     const orgName = document.createElement('h3');
-    orgName.className = 'text-lg font-bold text-white';
+    orgName.className = 'text-base font-bold text-white';
     orgName.textContent = item.org;
 
     headerDiv.appendChild(typeIcon);
@@ -154,14 +148,24 @@ function renderCareer() {
 
     // 직위/전공
     const roleDiv = document.createElement('p');
-    roleDiv.className = 'text-sky-400 font-semibold text-sm mb-2';
+    roleDiv.className = 'text-sky-400 font-semibold text-sm mb-2 line-clamp-2';
     roleDiv.textContent = item.role;
 
-    // 기간 + 근무일수
+    // 기간
     const periodDiv = document.createElement('p');
-    periodDiv.className = 'text-slate-400 text-sm mb-2';
+    periodDiv.className = 'text-slate-400 text-xs mb-2';
+    periodDiv.innerHTML = `<strong>${item.startDate} ~ ${item.endDate}</strong>`;
+
+    // 근무일수
+    const durationDiv = document.createElement('p');
+    durationDiv.className = 'text-sky-300 text-xs mb-3';
     const duration = calcDuration(item.startDate, item.endDate);
-    periodDiv.innerHTML = `<strong>${item.startDate} ~ ${item.endDate}</strong><br><span class="text-sky-300 text-xs">📅 ${duration}</span>`;
+    durationDiv.innerHTML = `📅 ${duration}`;
+
+    // 설명
+    const descDiv = document.createElement('p');
+    descDiv.className = 'text-slate-300 text-xs mb-3 leading-relaxed';
+    descDiv.textContent = item.desc || '';
 
     // 퇴사 사유 배지
     const reasonBadge = document.createElement('span');
@@ -169,21 +173,28 @@ function renderCareer() {
     reasonBadge.className = `exit-badge ${reasonClass}`;
     reasonBadge.textContent = item.exitReason;
 
-    // 설명
-    const descDiv = document.createElement('p');
-    descDiv.className = 'text-slate-400 text-sm mt-3 leading-relaxed';
-    descDiv.textContent = item.desc || '(설명 없음)';
-
-    // 조립
+    // 조립 (점은 카드 외부에 위치)
     card.appendChild(dot);
     card.appendChild(headerDiv);
     card.appendChild(roleDiv);
     card.appendChild(periodDiv);
+    card.appendChild(durationDiv);
+    if (item.desc) {
+      card.appendChild(descDiv);
+    }
     card.appendChild(reasonBadge);
-    card.appendChild(descDiv);
 
-    cardContainer.appendChild(card);
-    careerTimeline.appendChild(cardContainer);
+    // 클릭 이벤트 추가
+    card.onclick = function() {
+      showProjectsByCareer(index);
+      updateCareerHighlight(index);
+      // 프로젝트 섹션으로 부드럽게 스크롤
+      setTimeout(() => {
+        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    };
+
+    careerTimeline.appendChild(card);
   });
 }
 
@@ -303,14 +314,92 @@ function renderAchievements() {
   });
 }
 
+// ========== 6-3. 프로젝트 필터 버튼 렌더링 ==========
+function renderProjectFilters() {
+  const filtersContainer = document.getElementById('project-filters');
+  filtersContainer.innerHTML = '';
+
+  // 경력별 프로젝트 그룹화
+  const careerProjectMap = {};
+  PROFILE.projects.forEach(project => {
+    const idx = project.careerIndex;
+    if (!careerProjectMap[idx]) {
+      careerProjectMap[idx] = [];
+    }
+    careerProjectMap[idx].push(project);
+  });
+
+  // 경력 정보를 기반으로 필터 생성
+  PROFILE.career.forEach((career, careerIndex) => {
+    // 해당 경력 기간에 프로젝트가 있는지 확인
+    if (!careerProjectMap[careerIndex]) return;
+
+    const button = document.createElement('button');
+    button.className = 'project-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all';
+    button.type = 'button';
+    button.setAttribute('data-career-index', careerIndex);
+    button.textContent = `${career.org}`;
+
+    button.onclick = function() {
+      showProjectsByCareer(careerIndex);
+      return false;
+    };
+
+    filtersContainer.appendChild(button);
+  });
+}
+
+// ========== 6-4. 경력별 프로젝트 표시 ==========
+function showProjectsByCareer(careerIndex) {
+  const filtered = PROFILE.projects.filter(p => p.careerIndex === careerIndex);
+  renderProjectsFiltered(filtered);
+  highlightFilterButton(careerIndex);
+}
+
+// ========== 6-5. 필터 버튼 하이라이트 ==========
+function highlightFilterButton(careerIndex) {
+  document.querySelectorAll('.project-filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  const btn = document.querySelector(`[data-career-index="${careerIndex}"]`);
+  if (btn) btn.classList.add('active');
+}
+
+// ========== 6-6. 커리어 카드 하이라이트 ==========
+function updateCareerHighlight(activeIndex) {
+  document.querySelectorAll('.timeline-card').forEach((card, index) => {
+    card.classList.remove('active');
+    if (index === activeIndex) {
+      card.classList.add('active');
+    }
+  });
+}
+
 // ========== 7. 프로젝트 카드 렌더링 ==========
 function renderProjects() {
-  projectsGrid.innerHTML = '';
+  // 초기 렌더링: 모든 프로젝트 표시
+  renderProjectsFiltered(PROFILE.projects);
+}
 
-  PROFILE.projects.forEach((project, index) => {
+// ========== 7-1. 필터링된 프로젝트 렌더링 ==========
+function renderProjectsFiltered(projects) {
+  // 기존 내용 삭제
+  while (projectsGrid.firstChild) {
+    projectsGrid.removeChild(projectsGrid.firstChild);
+  }
+
+  if (!projects || projects.length === 0) {
+    const emptyMsg = document.createElement('p');
+    emptyMsg.className = 'col-span-full text-center text-slate-400';
+    emptyMsg.textContent = '이 기간에 진행한 프로젝트가 없습니다.';
+    projectsGrid.appendChild(emptyMsg);
+    return;
+  }
+
+  projects.forEach((project, index) => {
     const card = document.createElement('div');
-    card.className = 'project-card rounded-lg overflow-hidden fade-in';
-    card.style.animationDelay = `${index * 0.1}s`;
+    card.className = 'project-card rounded-lg overflow-hidden';
+    card.style.opacity = '1';
 
     // 이미지
     const imgContainer = document.createElement('div');
@@ -427,10 +516,26 @@ function initSmoothScroll() {
   });
 }
 
+// ========== 12. "모든 프로젝트" 필터 이벤트 ==========
+function initProjectFilterEvents() {
+  const allProjectsBtn = document.getElementById('all-projects-btn');
+  if (allProjectsBtn) {
+    allProjectsBtn.onclick = function() {
+      renderProjectsFiltered(PROFILE.projects);
+      document.querySelectorAll('.project-filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      allProjectsBtn.classList.add('active');
+      return false;
+    };
+  }
+}
+
 // ========== 페이지 로드 시 실행 ==========
 window.addEventListener('DOMContentLoaded', () => {
   initialize();
   initSmoothScroll();
+  initProjectFilterEvents();
 });
 
 // ========== 윈도우 로드 시 재실행 (이미지 로드 완료 후) ==========

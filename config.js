@@ -60,7 +60,8 @@ const PROFILE = {
       purpose: "센서로부터 실시간 온습도 데이터를 수집하고 저장하는 임베디드 시스템 개발",
       desc: "DHT22 온습도 센서와 SD카드 모듈을 이용하여 데이터를 수집·저장하고, UART 통신으로 PC와 통신. STM32 HAL 라이브러리를 활용한 저수준 제어 경험 획득.",
       image: "https://picsum.photos/400/250?random=1",
-      tags: ["STM32F4", "Embedded C", "UART", "Sensor"]
+      tags: ["STM32F4", "Embedded C", "UART", "Sensor"],
+      careerIndex: 2
     },
     {
       title: "AVR 기반 DC모터 PWM 제어기",
@@ -68,7 +69,8 @@ const PROFILE = {
       purpose: "마이크로컨트롤러를 이용한 DC모터 속도 제어 시스템 구축",
       desc: "ATmega328P 마이크로컨트롤러와 L298N 모터 드라이버를 이용하여 DC모터의 속도를 PWM 신호로 제어. 버튼 입력으로 속도 조절 가능한 사용자 인터페이스 구현.",
       image: "https://picsum.photos/400/250?random=2",
-      tags: ["AVR", "PWM", "Motor Control", "Hardware"]
+      tags: ["AVR", "PWM", "Motor Control", "Hardware"],
+      careerIndex: 1
     },
     {
       title: "PyQt5 시리얼 데이터 모니터 GUI",
@@ -76,7 +78,8 @@ const PROFILE = {
       purpose: "임베디드 장치로부터 시리얼 포트를 통해 수신한 데이터를 시각화하는 PC 애플리케이션 개발",
       desc: "PyQt5를 이용하여 직관적인 GUI 기반 시리얼 모니터 개발. 실시간 데이터 그래프 표시, 데이터 로깅, CSV 내보내기 기능 구현. 멀티스레드를 활용한 안정적인 UI 반응성 확보.",
       image: "https://picsum.photos/400/250?random=3",
-      tags: ["PyQt5", "Python", "GUI", "Serial Communication"]
+      tags: ["PyQt5", "Python", "GUI", "Serial Communication"],
+      careerIndex: 3
     },
     {
       title: "STM32 평가보드 회로설계 및 PCB 제작",
@@ -84,7 +87,8 @@ const PROFILE = {
       purpose: "STM32 마이크로컨트롤러 기반 실험용 평가보드 설계 및 PCB 제작",
       desc: "orCAD로 회로도 작성 및 Altium Designer로 PCB 레이아웃 설계. 2레이어 PCB에 STM32F407 MCU, 결정자(Crystal), 전원 회로, 프로그래밍 포트 구성. 실제 PCB 제조 및 부품 솔더링을 통한 손으로 직접 만드는 경험 획득.",
       image: "https://picsum.photos/400/250?random=4",
-      tags: ["orCAD", "Altium Designer", "PCB Design", "Hardware"]
+      tags: ["orCAD", "Altium Designer", "PCB Design", "Hardware"],
+      careerIndex: 2
     }
   ],
 
@@ -104,7 +108,7 @@ const PROFILE = {
     {
       type: "education",
       org: "OO대학교",
-      role: "전자공학과 학사",
+      role: "제어로봇공학과",
       startDate: "2015.03",
       endDate: "2019.02",
       exitReason: "졸업",
@@ -116,31 +120,31 @@ const PROFILE = {
       role: "전자공학과 석사",
       startDate: "2019.03",
       endDate: "2021.02",
-      exitReason: "졸업",
+      exitReason: "석사 취득",
       desc: "임베디드 시스템 및 펌웨어 개발 심화 연구"
     },
     {
       type: "work",
       org: "업체1 (스타트업)",
-      role: "펌웨어 개발자",
+      role: "인턴",
       startDate: "2021.03",
       endDate: "2022.12",
-      exitReason: "자진퇴사",
-      desc: "IoT 기기 펌웨어 개발 및 프로토타입 설계"
+      exitReason: "계약만료",
+      desc: "드론 실험 보조 및 자율주행 브레이크 시스템 개발 참여"
     },
     {
       type: "work",
       org: "업체2 (중견기업)",
-      role: "선임 펌웨어 개발자",
+      role: "로봇개발팀 대리",
       startDate: "2023.01",
       endDate: "2024.06",
-      exitReason: "자진퇴사",
+      exitReason: "경영난에 의한 권고사직",
       desc: "자동차 부품 임베디드 시스템 개발"
     },
     {
       type: "work",
       org: "업체3 (대기업)",
-      role: "시니어 펌웨어 엔지니어",
+      role: "로봇개발팀 선임연구원",
       startDate: "2024.07",
       endDate: "현재",
       exitReason: "재직중",
