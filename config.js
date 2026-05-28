@@ -115,12 +115,12 @@ const PROFILE = {
       startDate: "2015.03",
       endDate: "2019.02",
       exitReason: "졸업",
-      desc: "전자공학 전공으로 임베디드 시스템 기초 학습"
+      desc: ""
     },
     {
       type: "education",
       org: "OO대학원",
-      role: "전자공학과 석사",
+      role: "전기공학과 석사",
       startDate: "2019.03",
       endDate: "2021.02",
       exitReason: "석사 취득",
@@ -128,7 +128,7 @@ const PROFILE = {
     },
     {
       type: "work",
-      org: "업체1 (스타트업)",
+      org: "업체1",
       role: "인턴",
       startDate: "2021.03",
       endDate: "2022.12",
@@ -137,17 +137,17 @@ const PROFILE = {
     },
     {
       type: "work",
-      org: "업체2 (중견기업)",
-      role: "로봇개발팀 대리",
+      org: "업체2",
+      role: "대리",
       startDate: "2023.01",
       endDate: "2024.06",
-      exitReason: "경영난에 의한 권고사직",
+      exitReason: "자진퇴사",
       desc: "자동차 부품 임베디드 시스템 개발"
     },
     {
       type: "work",
-      org: "업체3 (대기업)",
-      role: "로봇개발팀 선임연구원",
+      org: "업체3",
+      role: "선임연구원",
       startDate: "2024.07",
       endDate: "현재",
       exitReason: "재직중",
@@ -167,14 +167,14 @@ const PROFILE = {
   achievements: [
     {
       type: "paper",
-      title: "저전력 IoT 센서 네트워크 설계",
+      title: "논문-1",
       date: "2020.06",
       issuer: "한국전자공학회",
       desc: "무선 센서 네트워크의 전력 효율을 높이는 알고리즘 제시"
     },
     {
       type: "paper",
-      title: "실시간 임베디드 시스템의 최적화 기법",
+      title: "논문-2",
       date: "2021.03",
       issuer: "IEEE 국제학술대회",
       desc: "RTOS 기반 시스템의 응답 시간 개선 방법 연구"
@@ -205,7 +205,7 @@ const PROFILE = {
   // ========== 연락처 ==========
   // 이메일과 전화번호를 수정할 수 있습니다
   contact: {
-    email: "parkss093642@gmail.com",  // ← 이메일 주소를 여기서 수정
+    email: "gmail@gmail.com",  // ← 이메일 주소를 여기서 수정
     phone: "000-0000-0000"            // ← 전화번호를 여기서 수정
     // 주의: GitHub, LinkedIn 등 외부 링크는 포함되지 않습니다
   }
